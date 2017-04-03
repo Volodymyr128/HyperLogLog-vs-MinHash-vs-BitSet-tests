@@ -17,7 +17,7 @@ public class TestUtils {
     }
 
     public static float getDeviation(float expectedResult, float actualResult) {
-        return getDeviation(expectedResult, actualResult, 5);
+        return Math.abs(expectedResult - actualResult);
     }
 
     public static float getDeviation(float expectedResult, float actualResult, int precision) {
