@@ -1,22 +1,29 @@
+package algos;
+
 import com.clearspring.analytics.stream.cardinality.CardinalityMergeException;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
+
 import java.util.*;
 import java.util.function.Supplier;
-import static utils.TestUtils.*;
+import static algos.utils.TestUtils.*;
 
 /**
  * Created by volodymyr.bakhmatiuk on 3/28/17.
  * This test is performed on small datasets which feet in RAM size
  */
 @RunWith(JUnit4ClassRunner.class)
-public class HLLvsBitSetTest extends AlgosTestBase {
+public class JaccardSimilarityHLLvsBitSetTest extends JaccardSimilarityTestBase {
 
 
     static final Supplier<String> UUID_SUPPLIER = () -> UUID.randomUUID().toString();
     static final Supplier<String> DOUBLE_UUID_SUPPLIER = () -> UUID.randomUUID().toString() + UUID.randomUUID().toString();
+
+    @Test
+    public void test() {
+    }
 
     /**
      * DUPLICATES_0X argument means how much duplicates (in percentage perspective) input will have

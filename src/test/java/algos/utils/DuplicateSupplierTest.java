@@ -1,18 +1,19 @@
+package algos.utils;
+
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
-import utils.DuplicateSupplier;
+import algos.utils.DuplicateSupplier;
 
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static utils.DuplicateSupplier.BATCH_SIZE;
-import static utils.TestUtils.getDuplicateSupplier;
+import static algos.utils.DuplicateSupplier.BATCH_SIZE;
+import static algos.utils.TestUtils.getDuplicateSupplier;
 
 /**
  * Created by volodymyr.bakhmatiuk on 3/31/17.

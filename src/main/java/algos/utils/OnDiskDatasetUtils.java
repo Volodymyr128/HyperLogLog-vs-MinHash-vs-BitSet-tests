@@ -1,4 +1,10 @@
-package utils;
+package algos.utils;
+
+import algos.IndexBitSetData;
+import algos.SparseBitSet;
+import com.carrotsearch.sizeof.RamUsageEstimator;
+import com.clearspring.analytics.hash.MurmurHash;
+import com.clearspring.analytics.stream.cardinality.HyperLogLogPlus;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,6 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+
+import static algos.utils.TestUtils.convertSize;
 
 /**
  * Created by volodymyr.bakhmatiuk on 3/30/17.
@@ -102,5 +110,29 @@ public class OnDiskDatasetUtils {
             counter++;
         }
         return spentSeconds / 1000;
+    }
+
+    public static HyperLogLogPlus makeHLLFromFile(String inputFileName) {
+        HyperLogLogPlus hll = new HyperLogLogPlus(16);
+        long spent = performFuncOnFileBatchByBatch(
+                inputFileName,
+                (String[] array) -> Stream.of(array).forEach(str -> hll.offerHashed(MurmurHash.hash64(str.getBytes(), str.getBytes().length))),
+                1_000_000
+        );
+        System.out.println("Spent " + spent + " seconds to execute HLL");
+        System.out.println("Result takes " + convertSize(RamUsageEstimator.sizeOf(hll)));
+        return hll;
+    }
+
+    public static SparseBitSet makeBitSetFromFile(String inputFileName) {
+        IndexBitSetData bitSetData = new IndexBitSetData();
+        long spent = performFuncOnFileBatchByBatch(
+                inputFileName,
+                (String[] array) -> Stream.of(array).forEach(bitSetData::setVal),
+                1_000_000
+        );
+        System.out.println("Spent " + spent + " seconds to execute BitSet");
+        System.out.println("Result takes " + convertSize(RamUsageEstimator.sizeOf(bitSetData.getBitSet())));
+        return bitSetData.getBitSet();
     }
 }

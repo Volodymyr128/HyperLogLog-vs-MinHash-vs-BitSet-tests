@@ -1,4 +1,4 @@
-package utils;
+package algos.utils;
 
 import java.math.BigDecimal;
 import java.util.function.Supplier;

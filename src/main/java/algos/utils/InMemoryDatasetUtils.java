@@ -1,4 +1,4 @@
-package utils;
+package algos.utils;
 
 import java.lang.reflect.Array;
 import java.util.function.Supplier;

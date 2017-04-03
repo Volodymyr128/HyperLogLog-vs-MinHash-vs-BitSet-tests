@@ -1,6 +1,6 @@
-package utils;
+package algos.utils;
 
-import static utils.TestUtils.round;
+import static algos.utils.TestUtils.round;
 
 /**
  * Created by volodymyr.bakhmatiuk on 3/30/17.

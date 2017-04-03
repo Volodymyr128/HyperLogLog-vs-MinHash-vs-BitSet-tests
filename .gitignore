@@ -3,3 +3,4 @@ test-file*
 target
 *.iml
 .idea
+cardinality-test-file-name

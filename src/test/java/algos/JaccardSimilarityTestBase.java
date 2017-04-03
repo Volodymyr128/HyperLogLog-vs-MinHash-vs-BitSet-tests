@@ -1,30 +1,27 @@
-import algos.IndexBitSetData;
+package algos;
+
 import algos.SparseBitSet;
 import com.carrotsearch.sizeof.RamUsageEstimator;
-import com.clearspring.analytics.hash.MurmurHash;
 import com.clearspring.analytics.stream.cardinality.CardinalityMergeException;
 import com.clearspring.analytics.stream.cardinality.HyperLogLogPlus;
-import utils.SimilarityUtils;
+import algos.utils.SimilarityUtils;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import static junit.framework.TestCase.assertTrue;
-import static utils.InMemoryDatasetUtils.generateArray;
-import static utils.InMemoryDatasetUtils.generateSimilarArray;
-import static utils.OnDiskDatasetUtils.generateSimilarArrayToFile;
-import static utils.OnDiskDatasetUtils.performFuncOnFileBatchByBatch;
-import static utils.OnDiskDatasetUtils.persistDataToFile;
-import static utils.TestUtils.convertSize;
-import static utils.TestUtils.getDeviation;
+import static algos.utils.InMemoryDatasetUtils.generateArray;
+import static algos.utils.InMemoryDatasetUtils.generateSimilarArray;
+import static algos.utils.OnDiskDatasetUtils.*;
+import static algos.utils.TestUtils.convertSize;
+import static algos.utils.TestUtils.getDeviation;
 
 /**
  * Created by volodymyr.bakhmatiuk on 4/3/17.
  */
-public abstract class AlgosTestBase {
+public abstract class JaccardSimilarityTestBase {
 
     final static String FILE_NAME_1 = "input-1";
     final static String FILE_NAME_2 = "input-2";
@@ -191,29 +188,7 @@ public abstract class AlgosTestBase {
         System.out.println("Finish BitSet test\n============");
     }
 
-    protected static HyperLogLogPlus makeHLLFromFile(String inputFileName) {
-        HyperLogLogPlus hll = new HyperLogLogPlus(16);
-        long spent = performFuncOnFileBatchByBatch(
-                inputFileName,
-                (String[] array) -> Stream.of(array).forEach(str -> hll.offerHashed(MurmurHash.hash64(str.getBytes(), str.getBytes().length))),
-                100_000
-        );
-        System.out.println("Spent " + spent + " seconds to execute HLL");
-        System.out.println("Result takes " + convertSize(RamUsageEstimator.sizeOf(hll)));
-        return hll;
-    }
 
-    protected static SparseBitSet makeBitSetFromFile(String inputFileName) {
-        IndexBitSetData bitSetData = new IndexBitSetData();
-        long spent = performFuncOnFileBatchByBatch(
-                inputFileName,
-                (String[] array) -> Stream.of(array).forEach(bitSetData::setVal),
-                100_000
-        );
-        System.out.println("Spent " + spent + " seconds to execute BitSet");
-        System.out.println("Result takes " + convertSize(RamUsageEstimator.sizeOf(bitSetData.getBitSet())));
-        return bitSetData.getBitSet();
-    }
 
     protected static <T, R> R measure(Function<T[], R> func, T[] input, String consumerName) {
         System.out.println("Takes input of size " + input.length + ", with RAM usage of " + convertSize(RamUsageEstimator.sizeOfAll(input)));

@@ -1,3 +1,5 @@
+package algos.utils;
+
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
@@ -9,7 +11,7 @@ import java.util.stream.Stream;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static utils.InMemoryDatasetUtils.*;
+import static algos.utils.InMemoryDatasetUtils.*;
 
 /**
  * Created by volodymyr.bakhmatiuk on 3/30/17.

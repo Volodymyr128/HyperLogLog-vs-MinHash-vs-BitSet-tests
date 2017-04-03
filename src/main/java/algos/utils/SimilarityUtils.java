@@ -1,4 +1,4 @@
-package utils;
+package algos.utils;
 
 import com.clearspring.analytics.hash.MurmurHash;
 import com.clearspring.analytics.stream.cardinality.CardinalityMergeException;
